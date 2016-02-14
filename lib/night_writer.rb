@@ -35,7 +35,11 @@ class NightWriter
     end
     input
   end
-  
+
+  def braille_wrap
+    [@braille_word_top.join.scan(/.{1,80}/), @braille_word_mid.join.scan(/.{1,80}/), @braille_word_bot.join.scan(/.{1,80}/)].transpose
+  end
+
   def index_the_numbers
     index_the_numbers = []
     valid_num = (0..9).to_a.map(&:to_s)
