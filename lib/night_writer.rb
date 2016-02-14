@@ -10,6 +10,7 @@ class NightWriter
   end
 
   def print_output
+    finalized_input_string
     "#{line1}\n#{line2}\n#{line3}"
   end
 
@@ -34,7 +35,7 @@ class NightWriter
     end
     input
   end
-
+  
   def index_the_numbers
     index_the_numbers = []
     valid_num = (0..9).to_a.map(&:to_s)
@@ -60,12 +61,12 @@ class NightWriter
   def finalized_input_string
     delete_new_lines
     star_the_capitals_and_downcase
+    place_pound_at_numbers
   end
 
   def line1
     line1 = []
-    input_array = finalized_input_string.chars
-    input_array.each do |letter|
+    input.chars.each do |letter|
       line1 << braille_map[letter][0..1]
     end
     line1.join
@@ -73,8 +74,7 @@ class NightWriter
 
   def line2
     line2 = []
-    input_array = finalized_input_string.chars
-    input_array.each do |letter|
+    input.chars.each do |letter|
       line2 << braille_map[letter][2..3]
     end
     line2.join
@@ -82,15 +82,10 @@ class NightWriter
 
   def line3
     line3 = []
-    input_array = finalized_input_string.chars
-    input_array.each do |letter|
+    input.chars.each do |letter|
       line3 << braille_map[letter][4..5]
     end
     line3.join
-  end
-
-  def eighty_chars_per_line
-
   end
 
 end
