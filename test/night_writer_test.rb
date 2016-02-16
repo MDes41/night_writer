@@ -115,7 +115,8 @@ class NightWriterTest < Minitest::Test
     nw = NightWriter.new(sample)
     nw.index_the_spaces
     output = nw.line_wrap_index_arr
-    array_of_tildas = nw.mark_where_breaks_should_be.chars
+    nw.mark_where_breaks_should_be
+    array_of_tildas = nw.input.chars
     array_of_tildas.find_all.with_index do |char, index|
       return index if char == "~"
     end
