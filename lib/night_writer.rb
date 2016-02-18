@@ -13,7 +13,7 @@ class NightWriter
     finalized_input_string
     output = ''
     arranged_lines_in_array.each do |line|
-      output += line + "\n"
+       output += line + "\n"
     end
     output = output.chomp
     "#{output}"
@@ -45,8 +45,9 @@ class NightWriter
   end
 
   def index_the_numbers
-    input.chars.map.with_index { |char,index| index if char =~ /[\d]/ &&
-    (input[index - 1] =~ /[^\d]/ || index == 0) }.compact
+    input.chars.map.with_index do |char,index|
+      index if char =~ /[\d]/ && (input[index - 1] =~ /[^\d]/ || index == 0)
+    end.compact
   end
 
   def place_pound_at_numbers
