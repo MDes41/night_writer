@@ -1,53 +1,28 @@
 require_relative 'braille'
+require_relative 'arrange_string_module'
 
 class NightReader
-  attr_reader :input, :braille_map, :bm_object, :output
+  attr_reader :input
+
+  include ArrangeString
+  include BrailleMap
 
   def initialize(input)
     @input = input
-    @bm_object = BrailleMap.new
-    @braille_map = bm_object.braille_map
-    @output = ''
+    # @bm_object = BrailleMap.new
+    # @braille_map = bm_object.braille_map
   end
 
   def print_output
     put_in_new_lines
   end
+
 #match_up_input_lines=========================================================
-  def split_input
-    input.chomp.split("\n")
-  end
 
-  def line1
-    get_line(0)
-  end
 
-  def line2
-    get_line(1)
-  end
 
-  def line3
-    get_line(2)
-  end
-
-  def get_line(line)
-    full_line = ''
-    until split_input[line] == nil
-      full_line << split_input[line]
-      line += 3
-    end
-    full_line
-  end
 #get_individual_braille_characters_from_3_input_lines =========================
-  def braille_letters
-    top, middle, bottom = [line1, line2, line3]
-    output = []
-    two = 0..1
-    until top == ""
-      output << top.slice!(two) + middle.slice!(two) + bottom.slice!(two)
-    end
-    output
-  end
+
 #convert_braille_to_english_without_numbers====================================
   def eng_wo_nums
     braille_letters.map do |braille_letter|
@@ -65,7 +40,7 @@ class NightReader
   end
 
   def not_a_number_character?(character)
-    bm_object.letters_or_numbers.include?(character) == false
+    letters_or_numbers.include?(character) == false
   end
 
   def sub_in_num
@@ -79,7 +54,7 @@ class NightReader
   end
 
   def letter_to_number(letter)
-    bm_object.numbers.key(braille_map[letter])
+    numbers.key(braille_map[letter])
   end
 #index_where_capitals_are_and_capitalize_them=================================
   def index_the_capitals
@@ -104,9 +79,8 @@ class NightReader
 #mark_spaces_and_add_new_line_marks_at_80_characters_per_line ================
   def put_in_new_lines
     output = strip_the_unnecessary.chars
-    spaces = index_the_spaces
     wrap = 80
-    spaces.each_with_index do |space, index|
+    index_the_spaces.each_with_index do |space, index|
       if wrap - space <= 0
         previous_index = index_the_spaces[index - 1]
         output[previous_index] = " \n"
@@ -121,6 +95,10 @@ class NightReader
     output.map.with_index do |letter, index|
       index if letter == " "
     end.compact
+  end
+
+  def total_character_count
+    strip_the_unnecessary.gsub(" ", "").length
   end
 
 end

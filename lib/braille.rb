@@ -1,7 +1,6 @@
-class BrailleMap
-  attr_reader :braille_map
+module BrailleMap
 
-  def initialize
+  def braille_map
     @braille_map = Hash.new
     @braille_map.merge!(lowercase)
     @braille_map.merge!(space)
@@ -10,6 +9,8 @@ class BrailleMap
     @braille_map.merge!(numbers)
     @braille_map.merge!(special)
   end
+
+
   def lowercase
     lower_case = {}
     lower_case = {

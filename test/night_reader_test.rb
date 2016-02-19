@@ -92,4 +92,10 @@ class NightReaderTest < MiniTest::Test
     assert_equal output, nr.put_in_new_lines
   end
 
+  def test_total_character_count_counts_90_chars
+    nr = NightReader.new(test)
+
+    assert_equal 90, nr.total_character_count
+  end
+
 end

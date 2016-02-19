@@ -28,6 +28,7 @@ class NightWrite
   def encode_to_braille(input)
     nw = NightWriter.new(input)
     braille = file_reader.write(nw.print_output)
+    puts "Created '#{ARGV[1]}' containing #{nw.total_character_count} characters of braille"
   end
 end
 

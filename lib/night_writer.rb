@@ -1,11 +1,11 @@
 require_relative 'braille'
 
 class NightWriter
-  attr_reader :input, :braille_map
-
+  attr_reader :input
+  include BrailleMap
   def initialize(input)
     @input = input
-    @braille_map = BrailleMap.new.braille_map
+    # @braille_map = BrailleMap.new.braille_map
   end
 
   def print_output
@@ -115,6 +115,10 @@ class NightWriter
     line.chars.map do |letter|
       braille_map[letter][level]
     end.join
+  end
+
+  def total_character_count
+    input.gsub("~", '').length
   end
 
 end
