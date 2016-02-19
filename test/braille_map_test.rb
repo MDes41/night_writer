@@ -45,4 +45,10 @@ class BrailleMapTest < Minitest::Test
 
     assert_equal 45, braille.count
   end
+
+  def test_letters_or_numbers_is_a_braille_object
+    bm = BrailleMap.new
+    object = bm.letters_or_numbers
+    assert_equal 10, object.count
+  end
 end
