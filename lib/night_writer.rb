@@ -2,10 +2,11 @@ require_relative 'braille'
 
 class NightWriter
   attr_reader :input
+
   include BrailleMap
+
   def initialize(input)
     @input = input
-    # @braille_map = BrailleMap.new.braille_map
   end
 
   def print_output

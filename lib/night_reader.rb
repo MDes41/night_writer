@@ -9,8 +9,6 @@ class NightReader
 
   def initialize(input)
     @input = input
-    # @bm_object = BrailleMap.new
-    # @braille_map = bm_object.braille_map
   end
 
   def print_output

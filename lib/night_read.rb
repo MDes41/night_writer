@@ -62,4 +62,4 @@ nr = NightRead.new
 nr.decode_file_to_english
 end
 
-puts ARGV.inspect
+puts "\n#{ARGV.inspect}"

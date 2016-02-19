@@ -46,9 +46,9 @@ class NightWrite
     nw = NightWriter.new(input)
     if all_letters_valid?
       braille = file_reader.write(nw.print_output)
-      puts "Created '#{ARGV[1]}' containing #{nw.total_character_count} characters of braille"
+      puts "\nCreated '#{ARGV[1]}' containing #{nw.total_character_count} characters of braille"
     else
-      puts "Lines of braille do not match up correctly, or have invalid character and cannot decode correctly untill fixed"
+      puts "\nInvalid characters in the message"
       "Incorrect_line_length"
     end
   end
@@ -58,4 +58,4 @@ if __FILE__ == $PROGRAM_NAME
 nw = NightWrite.new
 nw.encode_file_to_braille
 end
-puts ARGV.inspect
+puts "\n#{ARGV.inspect}"
