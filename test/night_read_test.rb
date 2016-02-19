@@ -11,6 +11,12 @@ class NightReadTest < MiniTest::Test
     assert_equal output, nr.decode_file_to_english(filename)
   end
 
+  def test_checks_if_string_is_empty
+    nr = NightRead.new
+    refute nr.check_if_empty("nope")
+    assert nr.check_if_empty("")
+  end
+  
   def test_all_letters_valid?
     nr = NightRead.new
     filename = "integration_tests/invalid_braille.txt"
