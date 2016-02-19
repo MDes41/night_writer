@@ -1,5 +1,6 @@
 require_relative 'night_reader'
 require_relative 'arrange_string_module'
+require_relative 'braille'
 
 class FileReader
   def read(filename)
@@ -14,6 +15,7 @@ end
 
 class NightRead
   include ArrangeString
+  include BrailleMap
 
   attr_reader :file_reader, :input
 
@@ -23,18 +25,22 @@ class NightRead
 
   def all_letters_valid?
     valid = ["0","."]
-    x  = braille_letters.join.chars.all? do |letter|
-      letter == valid.first || valid.last
+    braille_letters.all? do |letter|
+      braille_map.values.include?(letter.chars)
     end
+  end
+
+  def check_if_empty(input)
+    input.gsub(" ","").gsub("\n","") == ""
   end
 
   def decode_file_to_english(filename = ARGV[0])
     @input = file_reader.read(filename)
-    if input.gsub(" ","").gsub("\n","") == ""
-      puts "Nothing to read in #{filename}"
+    if check_if_empty(input)
+      puts "\nNothing to read in #{filename}"
       "Empty File"
     else
-      puts "#{filename} not empty...Checking if valid..."
+      puts "\n#{filename} not empty...Checking if valid..."
       plain = decode_to_english(input)
     end
   end
@@ -43,14 +49,17 @@ class NightRead
     nr = NightReader.new(input)
     if all_letters_valid?
       english = file_reader.write(nr.print_output)
-      puts "Created '#{ARGV[1]}' containing #{nr.total_character_count} english characters"
+      puts "\nCreated '#{ARGV[1]}' containing #{nr.total_character_count} english characters"
     else
-      puts "Braille message is corrupted, please write to file again"
+      puts "Lines of braille do not match up correctly, or have invalid character and cannot decode correctly untill fixed"
+      "Incorrect_line_length"
     end
   end
 end
 
-# nr = NightRead.new
-# nr.decode_file_to_english
+if __FILE__ == $PROGRAM_NAME
+nr = NightRead.new
+nr.decode_file_to_english
+end
 
 puts ARGV.inspect

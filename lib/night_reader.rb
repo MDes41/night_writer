@@ -17,13 +17,7 @@ class NightReader
     put_in_new_lines
   end
 
-#match_up_input_lines=========================================================
-
-
-
-#get_individual_braille_characters_from_3_input_lines =========================
-
-#convert_braille_to_english_without_numbers====================================
+#convert_braille_to_english_from_arranged_input_from_module====================
   def eng_wo_nums
     braille_letters.map do |braille_letter|
       braille_map.key(braille_letter.chars)
