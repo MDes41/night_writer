@@ -5,8 +5,7 @@ class NightWriter
 
   def initialize(input)
     @input = input
-    @bm_object = BrailleMap.new
-    @braille_map = bm_object.braille_map
+    @braille_map = BrailleMap.new.braille_map
   end
 
   def print_output
@@ -30,13 +29,7 @@ class NightWriter
     input.gsub!("\n"," ")
   end
 
-  def index_the_capitals
-    input.chars.map.with_index do |char, index|
-      index if ("A".."Z").include?(char)
-    end.compact
-  end
-
-
+#star_the_capitals_and_downcase ===============================================
   def star_the_capitals_and_downcase
     index_the_capitals.reverse.each do |index|
       input[index] = input[index].downcase
@@ -44,25 +37,42 @@ class NightWriter
     end
   end
 
-  def index_the_numbers
-    input.chars.map.with_index do |char,index|
-      index if char =~ /[\d]/ && (input[index - 1] =~ /[^\d]/ || index == 0)
+  def index_the_capitals
+    input.chars.map.with_index do |char, index|
+      index if ("A".."Z").include?(char)
     end.compact
   end
-
+#place_pound_at_numbers =======================================================
   def place_pound_at_numbers
     index_the_numbers.reverse.each do |index|
       input.insert(index, "#")
     end
   end
 
-  def index_the_spaces
-    input.chars.map.with_index do |chars, index|
-      index if chars == " "
+  def index_the_numbers
+    input.chars.map.with_index do |char,index|
+      if valid_number?(char)
+        index if index == 0 || no_number_before?(index)
+      end
     end.compact
   end
 
-  def line_wrap_index_arr
+  def valid_number?(character)
+    character.to_i.to_s == character.to_s
+  end
+
+  def no_number_before?(index)
+    previous_character = input[index - 1]
+    valid_number?(previous_character) == false
+  end
+#mark_where_line_breaks_should_be =============================================
+  def mark_where_breaks_should_be
+    index_the_line_breaks.reverse.each do |index|
+      input.insert(index + 1, "~")
+    end
+  end
+
+  def index_the_line_breaks
     wrap = 40
     index_the_spaces.map.with_index do |num, index|
       if wrap - num <= 0
@@ -73,37 +83,37 @@ class NightWriter
     end.compact
   end
 
-  def mark_where_breaks_should_be
-    line_wrap_index_arr.reverse.each do |index|
-      input.insert(index + 1, "~")
-    end
+  def index_the_spaces
+    input.chars.map.with_index do |chars, index|
+      index if chars == " "
+    end.compact
+  end
+#arrange_lines_to_be_output ===================================================
+  def arranged_lines_in_array
+    each_line.map do |line|
+      [top(line), middle(line), bottom(line)]
+    end.flatten
   end
 
   def each_line
     input.split("~")
   end
 
-  def arranged_lines_in_array
-    each_line.map do |line|
-      [line1(line), line2(line), line3(line)]
-    end.flatten
+  def top(line)
+    arrange_line(line, 0..1)
   end
 
-  def line1(line)
-    line.chars.map do |letter|
-      braille_map[letter][0..1]
-    end.join
+  def middle(line)
+    arrange_line(line, 2..3)
   end
 
-  def line2(line)
-    line.chars.map do |letter|
-      braille_map[letter][2..3]
-    end.join
+  def bottom(line)
+    arrange_line(line, 4..5)
   end
 
-  def line3(line)
+  def arrange_line(line, level)
     line.chars.map do |letter|
-      braille_map[letter][4..5]
+      braille_map[letter][level]
     end.join
   end
 

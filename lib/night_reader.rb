@@ -10,20 +10,18 @@ class NightReader
   end
 
   def print_output
-    zip_lines
-    "hello world test"
+    put_in_new_lines
   end
 
   def split_input
     input.chomp.split("\n")
   end
 
-  def get_line(row)
+  def get_line(line)
     full_line = ''
-    index = row
-    until split_input[index] == nil
-      full_line << split_input[index]
-      index += 3
+    until split_input[line] == nil
+      full_line << split_input[line]
+      line += 3
     end
     full_line
   end
@@ -41,9 +39,7 @@ class NightReader
   end
 
   def set_braille_arr
-    top = line1
-    middle = line2
-    bottom = line3
+    top, middle, bottom = [line1, line2, line3]
     braille_arr = []
     two = 0..1
     until top == ""
@@ -60,11 +56,11 @@ class NightReader
 
   def index_the_numbers
     output = convert_to_english.chars
-    num = false
+    num_lock = false
     x = output.map.with_index do |char, index|
-      num = true if char == "#"
-      num = false if char == " "
-      index if num == true
+      num_lock = true if char == "#"
+      num_lock = false if char == " "
+      index if num_lock == true
     end.compact
   end
 
@@ -103,5 +99,25 @@ class NightReader
     output.gsub('#', '')
   end
 
+  def index_the_spaces
+    output = strip_the_unnecessary.chars
+    output.map.with_index do |letter, index|
+      index if letter == " "
+    end.compact
+  end
+
+  def put_in_new_lines
+    output = strip_the_unnecessary.chars
+    spaces = index_the_spaces
+    wrap = 80 
+    spaces.each_with_index do |space, index|
+      if wrap - space <= 0
+        previous_index = index_the_spaces[index - 1]
+        output[previous_index] = " \n"
+        wrap = previous_index + 80
+      end
+    end
+    output.join
+  end
 
 end

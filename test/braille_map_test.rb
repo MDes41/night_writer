@@ -31,10 +31,18 @@ class BrailleMapTest < Minitest::Test
     assert_equal 1, braille.count
   end
 
+  def test_that_special_is_added
+    bm = BrailleMap.new
+    braille = bm.special
+
+    assert_equal [".",".","0","0","0","."], braille['!']
+    assert_equal 6, braille.count
+  end
+
   def test_that_braille_map_is_created
     bm = BrailleMap.new
     braille = bm.braille_map
 
-    assert_equal 39, braille.count
+    assert_equal 45, braille.count
   end
 end

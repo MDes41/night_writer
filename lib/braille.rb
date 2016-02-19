@@ -8,6 +8,7 @@ class BrailleMap
     @braille_map.merge!(capital)
     @braille_map.merge!(pound)
     @braille_map.merge!(numbers)
+    @braille_map.merge!(special)
   end
 
   def lowercase
@@ -41,6 +42,18 @@ class BrailleMap
                     "z" => ["0",".",".","0","0","0"]
                   }
     lower_case
+  end
+
+  def special
+    special = {}
+    special = { "!" => [".",".","0","0","0","."],
+                "'" => [".",".",".",".","0","."],
+                "," => [".",".","0",".",".","."],
+                "-" => [".",".",".",".","0","0"],
+                "." => [".",".","0","0",".","0"],
+                "?" => [".",".","0",".","0","0"]
+              }
+    special
   end
 
   def space
