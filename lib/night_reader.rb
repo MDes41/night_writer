@@ -10,9 +10,10 @@ class NightReader
   def initialize(input)
     @input = input
   end
+  # where is the 1 method that lists all the steps
 
   def print_output
-    put_in_new_lines
+    put_in_new_lines # that can't be the only thing we have to do
   end
 
 #convert_braille_to_english_from_arranged_input_from_module====================
@@ -64,7 +65,7 @@ class NightReader
   end
 #take_out_characters_representing_capitals_and_numbers_in_braille=============
   def strip_the_unnecessary
-    output = capitalize_the_indexed
+    output = capitalize_the_indexed # generates a new value
     output = output.gsub('*', '')
     output.gsub('#', '')
   end

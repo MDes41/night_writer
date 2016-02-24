@@ -20,25 +20,37 @@ class NightWriter
   end
 
   def finalized_input_string
+    # conductor method
     delete_new_lines
     star_the_capitals_and_downcase
     place_pound_at_numbers
     mark_where_breaks_should_be
   end
 
-  def delete_new_lines
-    input.gsub!("\n"," ")
-  end
-
-#star_the_capitals_and_downcase ===============================================
-  def star_the_capitals_and_downcase
-    index_the_capitals.reverse.each do |index|
-      input[index] = input[index].downcase
-      input.insert(index, "*")
+  class BrailleMarkers
+    def place_markers(input)
+      # stars
+      # pounds
+      # breaks
     end
   end
 
+  def delete_new_lines
+    input.gsub!("\n"," ") # changes
+  end
+
+#star_the_capitals_and_downcase ===============================================
+  def star_the_capitals_and_downcase(input)
+    index_the_capitals.reverse.each do |index|
+      input[index] = input[index].downcase
+      input.insert(index, "*") # changes
+    end
+    # -> return the new string that has stuff added
+    # to it
+  end
+
   def index_the_capitals
+    #
     input.chars.map.with_index do |char, index|
       index if ("A".."Z").include?(char)
     end.compact
@@ -85,6 +97,7 @@ class NightWriter
   end
 
   def index_the_spaces
+    # take input and generate some new thing
     input.chars.map.with_index do |chars, index|
       index if chars == " "
     end.compact
